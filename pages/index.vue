@@ -23,8 +23,10 @@
     },
 
     mounted() {
-      const todos = JSON.parse(Cookies.get('todos'));
-      this.todos = todos
+      const todosCookie = Cookies.get('todos');
+      if(typeof todosCookie !== 'undefined') {
+        this.todos = JSON.parse(todosCookie);
+      }
     },
 
     methods: {
