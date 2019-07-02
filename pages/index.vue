@@ -1,0 +1,38 @@
+<template>
+  <div>
+    <form>
+      <input type="text" v-model="task" placeholder="enter task here">
+      <button @click.prevent="save">Save Todo</button>
+    </form>
+
+    <h1>List of tasks</h1>
+    <ul>
+      <li v-for="todo in todos">{{ todo.task }}</li>
+    </ul>
+  </div>
+</template>
+
+<script>
+  import Cookies from 'js-cookie'
+  export default { 
+    data() {
+      return {
+        task: '',
+        todos: []
+      }
+    },
+
+    mounted() {
+      const todos = JSON.parse(Cookies.get('todos'));
+      this.todos = todos
+    },
+
+    methods: {
+      save() {
+        this.todos.push({ task: this.task, is_completed: false });
+        this.task = '';
+        Cookies.set('todos', this.todos);
+      }
+    }
+  }
+</script>
